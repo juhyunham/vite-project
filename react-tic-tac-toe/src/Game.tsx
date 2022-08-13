@@ -1,11 +1,77 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Square from "./Square";
 
 const INITIAL_GAME_STATE = ["", "", "", "", "", "", "", "", ""];
 
+const WINNG_COMBOS = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
 function Game() {
   const [gameState, setGameState] = useState(INITIAL_GAME_STATE);
   const [currentPlayer, setCurrentPlayer] = useState("X");
+
+  useEffect(() => {
+    checkForWinner();
+  }, [gameState]);
+
+  const resetBoard = () => setGameState(INITIAL_GAME_STATE);
+
+  const handleWin = () => {
+    window.alert(`Congratulations player ${currentPlayer}! You are the Winner!`);
+
+    resetBoard();
+  };
+
+  const handleDraw = () => {
+    window.alert("The game ended in a draw");
+
+    resetBoard();
+  };
+
+  const checkForWinner = () => {
+    let win = false;
+
+    for (let i = 0; i < WINNG_COMBOS.length; i++) {
+      const winCombo = WINNG_COMBOS[i];
+
+      let a = gameState[winCombo[0]];
+      let b = gameState[winCombo[1]];
+      let c = gameState[winCombo[2]];
+
+      if ([a, b, c].includes("")) {
+        continue;
+      }
+
+      if (a === b && b === c) {
+        win = true;
+        break;
+      }
+    }
+
+    if (win) {
+      setTimeout(() => handleWin(), 500);
+      return;
+    }
+
+    if (!gameState.includes("")) {
+      setTimeout(() => handleDraw(), 500);
+      return;
+    }
+
+    changePlayer();
+  };
+
+  const changePlayer = () => {
+    setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+  };
 
   const handleCellClick = (event: any) => {
     const cellIndex = Number(event.target.getAttribute("data-cell-index"));
