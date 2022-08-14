@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import Square from "./Square";
 
+type Scores = {
+  [key: string]: number;
+};
+
 const INITIAL_GAME_STATE = ["", "", "", "", "", "", "", "", ""];
+const INITIAL_SCORES: Scores = { X: 0, O: 0 };
 
 const WINNG_COMBOS = [
   [0, 1, 2],
@@ -17,6 +22,7 @@ const WINNG_COMBOS = [
 function Game() {
   const [gameState, setGameState] = useState(INITIAL_GAME_STATE);
   const [currentPlayer, setCurrentPlayer] = useState("X");
+  const [scores, setScores] = useState(INITIAL_SCORES);
 
   useEffect(() => {
     checkForWinner();
@@ -26,6 +32,11 @@ function Game() {
 
   const handleWin = () => {
     window.alert(`Congratulations player ${currentPlayer}! You are the Winner!`);
+
+    const newPlayerScore = scores[currentPlayer] + 1;
+    const newScores = { ...scores };
+    newScores[currentPlayer] = newPlayerScore;
+    setScores(newScores);
 
     resetBoard();
   };
@@ -94,6 +105,18 @@ function Game() {
           return <Square key={index} index={index} player={player} onClick={handleCellClick} />;
         })}
       </div>
+
+      <dl>
+        <dt>
+          Next player: <span>{currentPlayer}</span>
+        </dt>
+        <dd>
+          Player X wins: <span>{scores["X"]}</span>
+        </dd>
+        <dd>
+          Player O wins: <span>{scores["O"]}</span>
+        </dd>
+      </dl>
     </div>
   );
 }
