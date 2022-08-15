@@ -33,9 +33,8 @@ function Game() {
   const handleWin = () => {
     window.alert(`Congratulations player ${currentPlayer}! You are the Winner!`);
 
-    const newPlayerScore = scores[currentPlayer] + 1;
     const newScores = { ...scores };
-    newScores[currentPlayer] = newPlayerScore;
+    newScores[currentPlayer] = scores[currentPlayer] + 1;
     setScores(newScores);
 
     resetBoard();
@@ -106,14 +105,14 @@ function Game() {
         })}
       </div>
 
-      <dl>
-        <dt>
+      <dl className="mx-auto w-96 text-3xl text-serif text-white">
+        <dt className="mt-5">
           Next player: <span>{currentPlayer}</span>
         </dt>
-        <dd>
+        <dd className="mt-5">
           Player X wins: <span>{scores["X"]}</span>
         </dd>
-        <dd>
+        <dd className="mt-5">
           Player O wins: <span>{scores["O"]}</span>
         </dd>
       </dl>
