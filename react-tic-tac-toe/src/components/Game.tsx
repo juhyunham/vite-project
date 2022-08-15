@@ -42,7 +42,7 @@ function Game() {
   useEffect(() => {
     setTimeout(() => {
       setIsOpen(false);
-    }, 3000);
+    }, 5000);
   }, [winner]);
 
   const resetBoard = () => setGameState(INITIAL_GAME_STATE);
