@@ -105,14 +105,14 @@ function Game() {
         })}
       </div>
 
-      <dl>
-        <dt>
+      <dl className="mx-auto w-96 text-3xl text-serif text-white">
+        <dt className="mt-5">
           Next player: <span>{currentPlayer}</span>
         </dt>
-        <dd>
+        <dd className="mt-5">
           Player X wins: <span>{scores["X"]}</span>
         </dd>
-        <dd>
+        <dd className="mt-5">
           Player O wins: <span>{scores["O"]}</span>
         </dd>
       </dl>
